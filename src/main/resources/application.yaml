@@ -13,16 +13,10 @@ spring:
       ddl-auto: update
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
       routes:
-        - id: user-service
-          uri: http://localhost:8081
+        - id: credit-service
+          uri: lb://CREDIT-SERVICE  # Points to the service name registered in Eureka
           predicates:
-            - Path=/example/**
-      default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - Path=/api/credit/**
   jwt:
     secret: mySecretKey

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Entity
@@ -32,6 +33,7 @@ public class User implements UserDetails { // Implement the interface
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public String getPassword() {

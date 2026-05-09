@@ -15,6 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
@@ -45,10 +46,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             List<String> roles = jwtUtil.extractRoles(jwt);
 
-            List<SimpleGrantedAuthority> authorities = roles.stream()
+            List<SimpleGrantedAuthority> authorities = ((List<?>) roles).stream()
+                    .map(role -> {
+                        if (role instanceof Map<?, ?> roleMap) {
+                            return (String) roleMap.get("authority");
+                        }
+                        return role.toString();
+                    })
                     .map(SimpleGrantedAuthority::new)
                     .toList();
-
             UserDetails userDetails = new User(cardNumber, pin, authorities);
 
             if (jwtUtil.isTokenValid(jwt, userDetails)) {
