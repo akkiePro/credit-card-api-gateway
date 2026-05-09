@@ -20,3 +20,8 @@ spring:
             - Path=/api/credit/**
   jwt:
     secret: mySecretKey
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
