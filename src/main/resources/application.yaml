@@ -26,3 +26,8 @@ spring:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
   jwt:
     secret: mySecretKey
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
